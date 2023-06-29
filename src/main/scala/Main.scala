@@ -11,6 +11,7 @@ import io.circe
 import routes._
 import services._
 import org.http4s.server.middleware.RequestLogger
+import cats.effect.std.Random
 object Main extends IOApp {
 //implicit val loggerName=LoggerName("name")
   private implicit val logger = Slf4jLogger.getLogger[IO]
@@ -21,21 +22,26 @@ object Main extends IOApp {
     )
 
   override def run(args: List[String]): IO[ExitCode] =
-    EmberServerBuilder
-      .default[IO]
-      .withHttpApp(
-        RequestLogger.httpApp(true, false)(
-          UploadRoutes(UploadService.make[IO]).uploadRoutes.orNotFound
-        )
-      )
-      .withPort(port"8083")
-      .withHost(host"127.0.0.1")
-      // .withLogger(logger)
-      // .withTLS()
-      // .withHostOption()
-      .build
-      .evalTap(showEmberBanner[IO](_))
-      .useForever
+    Random
+      .scalaUtilRandom[IO]
+      .flatMap { random =>
+        EmberServerBuilder
+          .default[IO]
+          .withHttpApp(
+            RequestLogger.httpApp(true, false)(
+              FileRoutes(
+                UploadService.make[IO],
+                DownloadService.make[IO],
+                random
+              ).uploadRoutes.orNotFound
+            )
+          )
+          .withPort(port"8085")
+          .withHost(host"127.0.0.1")
+          .build
+          .evalTap(showEmberBanner[IO](_))
+          .useForever
+      }
       .as(ExitCode.Success)
 
 }
