@@ -49,3 +49,5 @@ lazy val root = (project in file("."))
   )
 
 fork := true
+
+scalacOptions ++= Seq("-Ypartial-unification", "-Wvalue-discard", "-Wnonunit")

@@ -9,38 +9,23 @@ import cats.syntax.all._
 trait UploadService[F[_]] {
 
   def upload(
-    partFileName: String,
-    body: fs2.Stream[F, Byte]
+      partFileName: String,
+      body: fs2.Stream[F, Byte]
   ): F[Unit]
 
 }
 
 object UploadService {
 
-  def make[F[_]: Async]=
+  def make[F[_]: Async] =
     new UploadService[F] {
-
       def upload(
-        partFileName: String,
-        body: fs2.Stream[F, Byte]
+          partFileName: String,
+          body: fs2.Stream[F, Byte]
       ): F[Unit] = {
-       
         val fileStoreLocation = s"./src/main/upload/$partFileName"
         val target = Path(fileStoreLocation)
-
-        val ef =
-          for {
-
-            - <-
-              body
-                .through(Files[F].writeAll(target))
-                .compile
-                .drain
-          } yield ()
-
-        //println("UploadService::done upload")
-        //println("UploadService::starting upload")
-        ef
+        body.through(Files[F].writeAll(target)).compile.drain
       }
 
     }
