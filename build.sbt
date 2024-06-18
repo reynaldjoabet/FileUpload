@@ -53,7 +53,4 @@ lazy val root = (project in file(".")).settings(
 
 fork := true
 
-scalacOptions ++= Seq("-Ypartial-unification", "-Wvalue-discard", "-Wnonunit")
-
-
 ThisBuild/usePipelining := true
