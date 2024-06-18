@@ -1,6 +1,6 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-ThisBuild / scalaVersion := "2.13.10"
+ThisBuild / scalaVersion := "2.13.14"
 
 val http4sVersion     = "0.23.16"
 val cirisVersion      = "3.1.0"
@@ -54,3 +54,6 @@ lazy val root = (project in file(".")).settings(
 fork := true
 
 scalacOptions ++= Seq("-Ypartial-unification", "-Wvalue-discard", "-Wnonunit")
+
+
+ThisBuild/usePipelining := true
