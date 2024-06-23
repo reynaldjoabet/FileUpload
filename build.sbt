@@ -53,4 +53,4 @@ lazy val root = (project in file(".")).settings(
 
 fork := true
 
-ThisBuild/usePipelining := true
+ThisBuild / usePipelining := true
