@@ -30,7 +30,7 @@ val http4sServer = http4s("ember-server")
 val http4sClient = http4s("ember-client")
 val http4sCirce  = http4s("circe")
 
-val logbackVersion = "1.4.7"
+val logbackVersion = "1.4.14"
 
 val logback = "ch.qos.logback" % "logback-classic" % logbackVersion
 
@@ -53,4 +53,4 @@ lazy val root = (project in file(".")).settings(
 
 fork := true
 
-ThisBuild/usePipelining := true
+ThisBuild / usePipelining := true
