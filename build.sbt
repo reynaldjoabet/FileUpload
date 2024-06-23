@@ -5,7 +5,7 @@ ThisBuild / scalaVersion := "2.13.14"
 val http4sVersion     = "0.23.16"
 val cirisVersion      = "3.1.0"
 val circeVersion      = "0.14.5"
-val catsEffectVersion = "3.4.8"
+val catsEffectVersion = "3.4.11"
 val fs2Version        = "3.7.0"
 
 def circe(artifact: String): ModuleID =
@@ -53,4 +53,4 @@ lazy val root = (project in file(".")).settings(
 
 fork := true
 
-ThisBuild/usePipelining := true
+ThisBuild / usePipelining := true
